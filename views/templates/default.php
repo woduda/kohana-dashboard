@@ -28,6 +28,7 @@
 	<div class="row">
 <?php if (isset($side_menu)) echo $side_menu; ?>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+<?php if (isset($alerts)) echo $alerts; ?>
 <?php if (isset($content)) echo $content; ?>
 		</div>
 	</div>
