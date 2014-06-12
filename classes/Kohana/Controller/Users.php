@@ -16,6 +16,8 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 	public function action_changepassword()
 	{
+		$this->set_active_menu_item('users_changepassword');
+
 		$data = array();
 		$errors = array();
 		if ($this->request->method() == "POST")

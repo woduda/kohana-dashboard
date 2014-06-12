@@ -23,6 +23,6 @@
 			<p class="help-block"><?php echo $errors['repeat_password']; ?></p>
 		<?php endif; ?>
 	</div>
-	<button type="submit" class="btn btn-default btn-primary">Zapisz</button>
+	<button type="submit" class="btn btn-default btn-success">Zapisz</button>
 <?php echo Form::close(); ?>
 </div>

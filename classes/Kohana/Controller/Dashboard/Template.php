@@ -137,8 +137,6 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 
 			if (Auth::instance()->logged_in())
 			{
-				$this->set_active_menu_item(strtolower($this->request->controller()."_".$this->request->action()));
-
 				$top_menu = View::factory('top_menu')
 					->set('data', $this->dashboard_config->get('top_menu'))
 					->bind('active_menu_item', $this->active_menu_item);
