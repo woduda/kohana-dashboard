@@ -50,6 +50,12 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	protected $user = NULL;
 
 	/**
+	 * User roles saved there for futher has_role($role) check
+	 * @var array
+	 */
+	protected $user_roles = array();
+
+	/**
 	 * Array of alerts to display
 	 * @var array
 	 */
@@ -66,7 +72,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 			$this->redirect(Route::get('login')->uri());
 		}
 
-		$this->user = Auth::instance()->get_user();
+		$this->user = $this->logged_user();
 
 		// If the request is a remote call (AJAX or HMVC), turn off autorendering
 		if ($this->is_remote())
@@ -84,6 +90,27 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 			// Get alerts from session
 			$this->alerts = Session::instance()->get('alerts', array());
 		}
+	}
+
+	/**
+	 * Loads user and all user related data (ex. roles)
+	 */
+	protected function logged_user()
+	{
+		$user = Auth::instance()->get_user();
+		if ( ! empty($user) AND $user->loaded())
+		{
+			$this->user_roles = $user->roles
+				->find_all()
+				->as_array('name');
+		}
+
+		return $user;
+	}
+
+	protected function has_role($role)
+	{
+		return array_key_exists($role, $this->user_roles);
 	}
 
 	protected function require_login()
