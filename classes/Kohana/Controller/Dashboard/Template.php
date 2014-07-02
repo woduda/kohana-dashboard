@@ -110,12 +110,45 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 
 	protected function has_role($role)
 	{
-		return array_key_exists($role, $this->user_roles);
+		if (empty($role))
+			return TRUE;
+
+		if (is_array($role))
+		{
+			foreach ($role as $r)
+			{
+				if ( ! array_key_exists($r, $this->user_roles))
+					return FALSE;
+			}
+			return TRUE;
+		}
+		else
+			return array_key_exists($role, $this->user_roles);
 	}
 
 	protected function require_login()
 	{
 		return TRUE;
+	}
+
+	/**
+	 * Filters menu items according to auth roles
+	 * @param array $items items array from config
+	 * @return array filtered items
+	 */
+	protected function menu(array $items)
+	{
+		$_items = array();
+		foreach ($items as $id => $item)
+		{
+			$role = Arr::get($item, 'role');
+			if ( ! $this->has_role($role))
+				continue;
+
+			$_items[$id] = $item;
+		}
+
+		return $_items;
 	}
 
 	/**
@@ -125,10 +158,6 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	{
 		if ($this->auto_render)
 		{
-			if ($this->content instanceof View)
-			{
-				$this->content->set('logged', Auth::instance()->logged_in());
-			}
 			$this->template
 				->bind('body_class', $this->body_class)
 				->bind('content', $this->content)
@@ -137,12 +166,15 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 
 			if (Auth::instance()->logged_in())
 			{
+				$_menu = $this->menu($this->dashboard_config->get('top_menu'));
+
 				$top_menu = View::factory('top_menu')
-					->set('data', $this->dashboard_config->get('top_menu'))
+					->set('data', $_menu)
 					->bind('active_menu_item', $this->active_menu_item);
 
+				$_menu = $this->menu($this->dashboard_config->get('side_menu'));
 				$side_menu = View::factory('side_menu')
-					->set('data', $this->dashboard_config->get('side_menu'))
+					->set('data', $_menu)
 					->bind('active_menu_item', $this->active_menu_item);
 
 				$alerts = View::factory('alerts')

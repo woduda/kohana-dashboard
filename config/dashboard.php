@@ -9,6 +9,7 @@ return array(
 				'route' => 'default',	// not required (defaults to 'default')
 				'controller' => 'users',
 				'action' => 'changepassword',
+				'role' => 'login',	// displayed only if logged user has this role; can be array of roles (all roles required to display); role is not checked if this option is not set or is empty
 			),
 		),
 		'side_menu' => array(
