@@ -1,5 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Controller class for all user management tasks
+ * @author wduda
+ *
+ */
 class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 	public function before()
@@ -14,6 +19,9 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		parent::after();
 	}
 
+	/**
+	 * Changing password for logged user
+	 */
 	public function action_changepassword()
 	{
 		$this->set_active_menu_item('users_changepassword');

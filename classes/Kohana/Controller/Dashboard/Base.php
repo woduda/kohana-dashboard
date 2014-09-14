@@ -1,5 +1,15 @@
 <?php defined('SYSPATH') OR die('No direct access allowed.');
 
+/**
+ * Base class for all dashboard controllers
+ * It takes care about:
+ * * loading dashboard configuration
+ * * setting content
+ * * defines simplified logging methods
+ *
+ * @author wduda
+ *
+ */
 class Kohana_Controller_Dashboard_Base extends Controller {
 
 	/**

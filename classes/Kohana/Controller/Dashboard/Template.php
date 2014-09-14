@@ -61,6 +61,14 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	 */
 	private $alerts = array();
 
+	/**
+	 * Kohana controller before() method that checks:
+	 * * if user must be logged to perform this request (require_login() method)
+	 * * if it is "remote" request
+	 * Collects user object and creates template View
+	 *
+	 * @see Kohana_Controller_Dashboard_Base::before()
+	 */
 	public function before()
 	{
 		// Run anything that need to run before this.
@@ -93,7 +101,8 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	}
 
 	/**
-	 * Loads user and all user related data (ex. roles)
+	 * Loads user and all user related data (roles)
+	 * @return Model_User - logged user object
 	 */
 	protected function logged_user()
 	{
@@ -108,6 +117,11 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 		return $user;
 	}
 
+	/**
+	 * Checks if logged user has role or all of roles specifed by $role
+	 * @param string|array $role - one role string or array of roles
+	 * @return boolean TRUE if user has all roles
+	 */
 	protected function has_role($role)
 	{
 		if (empty($role))
@@ -126,6 +140,12 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 			return array_key_exists($role, $this->user_roles);
 	}
 
+	/**
+	 * This function is used to determine if user must be logged
+	 * and will be redirected to login page if is not.
+	 * @see: Kohana_Controller_Dashboard_Template::before()
+	 * @return boolean
+	 */
 	protected function require_login()
 	{
 		return TRUE;

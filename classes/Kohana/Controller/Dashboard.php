@@ -1,17 +1,33 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Basic dashboard controller that supplies with login and logout action
+ * This controller should be set as default controler for default route
+ * @author wduda
+ */
+
 class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 
+	/**
+	 * Returns TRUE for request to actions other than login an logout
+	 * @see Kohana_Controller_Dashboard_Template::require_login()
+	 */
 	protected function require_login()
 	{
 		return ( ! in_array($this->request->action(), array('login', 'logout')));
 	}
 
+	/**
+	 * Action to show some kind of "homepage" after login
+	 */
 	public function action_index()
 	{
 		$this->set_content(View::factory('index'));
 	}
 
+	/**
+	 * Basic login action
+	 */
 	public function action_login()
 	{
 		if (Auth::instance()->logged_in())
@@ -41,6 +57,9 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 		$this->add_body_class('login');
 	}
 
+	/**
+	 * Basic logout action
+	 */
 	public function action_logout()
 	{
 		Auth::instance()->logout();

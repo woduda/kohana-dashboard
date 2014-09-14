@@ -1,5 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
+/**
+ * Controller class for errors serving
+ * @author wduda
+ *
+ */
 class Kohana_Controller_Errors extends Controller_Dashboard_Template {
 
 	public function action_index()
