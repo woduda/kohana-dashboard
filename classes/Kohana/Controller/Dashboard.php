@@ -38,7 +38,7 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 		$this->content = View::factory('login');
 		if ($this->request->method() == "POST")
 		{
-			$login = $this->request->post('login');
+			$login = $this->request->post('username');
 			$password = $this->request->post('password');
 
 			$success = Auth::instance()->login($login, $password);
@@ -51,7 +51,7 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 			else
 			{
 				$this->info(Auth::instance()->hash_password($password));
-				$this->content->set('error', 'Błędny login lub hasło');
+				$this->content->set('error', __('Wrong username or password'));
 			}
 		}
 		$this->add_body_class('login');

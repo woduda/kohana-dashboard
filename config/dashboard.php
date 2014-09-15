@@ -4,8 +4,8 @@ return array(
 		'name' => 'Kohana Dashboard',	// Project name
 		'top_menu' => array(
 			'users_changepassword' => array(
-				'name' => 'Zmień hasło',
-				'description' => 'Zmiana hasła aktualnie zalogowanego użytkownika',
+				'name' => __('Change password'),
+				'description' => __('Allows to change password of logged user'),
 				'route' => 'default',	// not required (defaults to 'default')
 				'controller' => 'users',
 				'action' => 'changepassword',
@@ -13,6 +13,13 @@ return array(
 			),
 		),
 		'side_menu' => array(
+			'users' => array(
+				'name' => __("Users"),
+				'description' => __('Users management'),
+				'controller' => 'users',
+				'action' => 'index',
+				'role' => 'admin',
+			),
 		),
 		'per_page' => 10,
 	);

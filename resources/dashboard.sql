@@ -7,6 +7,7 @@ DROP TABLE IF EXISTS `users`;
 
 CREATE TABLE `users` (
        `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT
+     , `created` INTEGER UNSIGNED NOT NULL
      , `email` VARCHAR(254) NOT NULL
      , `username` VARCHAR(32) NOT NULL
      , `password` VARCHAR(64) NOT NULL

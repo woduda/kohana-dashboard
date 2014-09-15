@@ -4,7 +4,7 @@
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-				<span class="sr-only">Pokaż menu</span>
+				<span class="sr-only"><?php echo __('Show menu'); ?></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
@@ -18,7 +18,7 @@
 				<a href="<?php echo Route::url(Arr::get($item, 'route', 'default'), Arr::extract($item, array('controller', 'action', 'directory'))); ?>"><?php echo Arr::get($item, 'name'); ?></a>
 			</li>
 <?php endforeach; ?>
-			<li><a href="<?php echo Route::url('logout'); ?>"><span class="glyphicon glyphicon-log-out"></span> Wyloguj</a></li>
+			<li><a href="<?php echo Route::url('logout'); ?>"><span class="glyphicon glyphicon-log-out"></span> <?php echo __('Sign out'); ?></a></li>
 		</ul>
 		</div><!--/.nav-collapse -->
 	</div>

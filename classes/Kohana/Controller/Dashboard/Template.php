@@ -186,6 +186,10 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 
 			if (Auth::instance()->logged_in())
 			{
+				if ($this->content instanceof View)
+				{
+					$this->content->bind("logged_user", $this->user);
+				}
 				$_menu = $this->menu($this->dashboard_config->get('top_menu'));
 
 				$top_menu = View::factory('top_menu')
