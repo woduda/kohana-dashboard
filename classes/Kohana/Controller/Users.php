@@ -32,11 +32,13 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			->order_by("id", "DESC")
 			->find_all();
 
-		$login_role = ORM::factory('Role', array('name' => 'login'));
-
+		$statuses = array(
+			Model_User::STATUS_CREATED => array(FALSE => __('Created not confirmed')),
+			Model_User::STATUS_CONFIRMED => array(FALSE => __('Locked'), TRUE => __('Confirmed and active')),
+		);
 		$this->content = View::factory("users")
 			->bind("users", $users)
-			->bind("login_role", $login_role);
+			->bind("statuses", $statuses);
 	}
 
 	protected function check_user_id()
@@ -124,6 +126,18 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			$user->active(FALSE);
 
 			$this->add_alert_success(__('Access for username :username was locked.', array(":username" => $user->username)));
+		}
+		$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+		// End
+	}
+
+	public function action_sendactivationlink()
+	{
+		$user = $this->check_user_id();
+		if ($user->id != $this->user->id AND $user->status == Model_User::STATUS_CREATED)
+		{
+			// TODO: link sending
+			$this->add_alert_success(__('Activation link was sent to :email.', array(":email" => $user->email)));
 		}
 		$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
 		// End

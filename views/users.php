@@ -16,7 +16,7 @@
 		<th><?php echo __("E-mail"); ?></th>
 		<th><?php echo __("First name"); ?></th>
 		<th><?php echo __("Last name"); ?></th>
-		<th class="text-center"><?php echo __("Active"); ?></th>
+		<th class="text-center"><?php echo __("Status"); ?></th>
 		<th>&nbsp;</th>
 	</tr>
 </thead>
@@ -28,11 +28,15 @@
 	<td><?php echo HTML::mailto($user->email); ?></td>
 	<td><?php echo $user->first_name; ?></td>
 	<td><?php echo $user->last_name; ?></td>
-	<td class="text-center"><?php echo __($active ? "Yes" : "No"); ?></td>
+	<td class="text-center"><?php echo Arr::path($statuses, array($user->status, $active)); ?></td>
 	<td>
 <?php if ($user->id != $logged_user->id): ?>
 		<?php echo HTML::anchor(Route::get('default')->uri(array('controller' => 'users', 'action' => 'edit', 'id' => $user->id)), '<span class="glyphicon glyphicon-edit"></span> '.__('Edit'), array('class' => 'btn btn-primary btn-xs', 'style' => 'margin: 0.2em 0')); ?></li>
+<?php if ($user->status == Model_User::STATUS_CREATED): ?>
+		<?php echo HTML::anchor(Route::get('default')->uri(array('controller' => 'users', 'action' => 'sendactivationlink', 'id' => $user->id)), '<span class="glyphicon glyphicon-send"></span> '.__('Send activation link'), array('class' => 'btn btn-xs btn-success', 'style' => 'margin: 0.2em 0')); ?></li>
+<?php else: ?>
 		<?php echo HTML::anchor(Route::get('default')->uri(array('controller' => 'users', 'action' => $active ? 'off' : 'on', 'id' => $user->id)), '<span class="glyphicon glyphicon-off"></span> '.__($active ? 'Turn off' : 'Turn on'), array('class' => 'btn btn-xs btn-'.($active ? 'success' : 'warning'), 'style' => 'margin: 0.2em 0')); ?></li>
+<?php endif; ?>
 <?php endif; ?>
 	</td>
 </tr>

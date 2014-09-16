@@ -26,6 +26,11 @@ return array
 	'Active' => 'Aktywny',
 	'Yes' => 'Tak',
 	'No' => 'Nie',
+	'Status' => 'Status',
+	'Created not confirmed' => 'Utworzony nie potwierdzony',
+	'Confirmed and active' => 'Potwierdzony i aktywny',
+	'Locked' => 'Zablokowany',
+	'Send activation link' => 'Wyślij link aktywacyjny',
 	'Back' => 'Powrót',
 	'Turn on' => 'Włącz',
 	'Turn off' => 'Wyłącz',
@@ -40,5 +45,6 @@ return array
 	'Changes to user :username were saved.' => 'Zapisano zmiany w danych użytkownika o nazwie :username.',
 	'Access for username :username was unlocked.' => 'Odblokowano dostęp użytkownikowi o nazwie :username.',
 	'Access for username :username was locked.' => 'Zablokowano dostęp użytkownikowi o nazwie :username.',
+	'Activation link was sent to :email.' => 'Wysłano link aktywacyjny na adres :email.',
 
 );

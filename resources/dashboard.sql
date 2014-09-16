@@ -2,6 +2,7 @@ SET storage_engine=InnoDB;
 
 DROP TABLE IF EXISTS `roles_users`;
 DROP TABLE IF EXISTS `user_tokens`;
+DROP TABLE IF EXISTS `user_hashlinks`;
 DROP TABLE IF EXISTS `roles`;
 DROP TABLE IF EXISTS `users`;
 
@@ -11,6 +12,7 @@ CREATE TABLE `users` (
      , `email` VARCHAR(254) NOT NULL
      , `username` VARCHAR(32) NOT NULL
      , `password` VARCHAR(64) NOT NULL
+     , `status` TINYINT UNSIGNED NOT NULL DEFAULT 0
      , `logins` INTEGER UNSIGNED NOT NULL DEFAULT 0
      , `last_login` INTEGER UNSIGNED NOT NULL
      , `first_name` VARCHAR(254)
@@ -35,6 +37,16 @@ CREATE TABLE `user_tokens` (
      , PRIMARY KEY (`id`)
 );
 
+CREATE TABLE `user_hashlinks` (
+       `id` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT
+	 , `user_id` INTEGER UNSIGNED NOT NULL
+	 , `created` INTEGER UNSIGNED NOT NULL
+	 , `disabled` INTEGER UNSIGNED NOT NULL
+	 , `hash` VARCHAR(32) NOT NULL
+	 , `email` VARCHAR(254) NOT NULL
+	 , PRIMARY KEY (`id`)
+);
+
 CREATE TABLE `roles_users` (
        `user_id` INTEGER UNSIGNED NOT NULL
      , `role_id` INTEGER UNSIGNED NOT NULL
@@ -55,6 +67,17 @@ ALTER TABLE `user_tokens`
       REFERENCES `users` (`id`)
    ON DELETE CASCADE
    ON UPDATE CASCADE;
+
+ALTER TABLE `user_hashlinks`
+  ADD CONSTRAINT `user_hashlinks_user_id_fk`
+      FOREIGN KEY (`user_id`)
+      REFERENCES `users` (`id`)
+   ON DELETE CASCADE
+   ON UPDATE CASCADE;
+
+ALTER TABLE `user_hashlinks`
+  ADD CONSTRAINT `user_hashlinks_hash_uq`
+      UNIQUE (`hash`);
 
 ALTER TABLE `roles_users`
   ADD CONSTRAINT `roles_users_user_id_fk`

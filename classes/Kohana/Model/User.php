@@ -2,7 +2,27 @@
 
 class Kohana_Model_User extends Model_Auth_User {
 
+	/**
+	 * User initial status after creation.
+	 * User has no login role until his status changes to CONFIRMED
+	 * @var int
+	 */
+	const STATUS_CREATED = 0;
+
+	/**
+	 * User status after confirming by clicking
+	 * verification link from e-mail and after setting account password
+	 * @var int
+	 */
+	const STATUS_CONFIRMED = 1;
+
 	const LOGIN_ROLE_ID = 1;
+
+	protected $_has_many = array(
+		'user_tokens' => array('model' => 'User_Token'),
+		'hashlinks'   => array('model' => 'User_Hashlink'),
+		'roles'       => array('model' => 'Role', 'through' => 'roles_users'),
+	);
 
 	/**
 	 * Sets or gets if user is active.
