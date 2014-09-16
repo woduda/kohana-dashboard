@@ -8,8 +8,10 @@ return array
 	'Allows to change password of logged user' => 'Zmiana hasła zalogowanego użytkownika',
 	'Users' => 'Użytkownicy',
 	'Users management' => 'Zarządzanie użytkownikami',
+	'Password' => 'Hasło',
 	'Current password' => 'Aktualne hasło',
 	'New password' => 'Nowe hasło',
+	'Repeat password' => 'Powtórz hasło',
 	'Repeat new password' => 'Powtórz nowe hasło',
 	'Save' => 'Zapisz',
 	'New user' => 'Nowy użytkownik',
@@ -46,5 +48,8 @@ return array
 	'Access for username :username was unlocked.' => 'Odblokowano dostęp użytkownikowi o nazwie :username.',
 	'Access for username :username was locked.' => 'Zablokowano dostęp użytkownikowi o nazwie :username.',
 	'Activation link was sent to :email.' => 'Wysłano link aktywacyjny na adres :email.',
-
+	'Account activation at :name' => 'Aktywacja konta na :name',
+	'Set up your account password' => 'Ustaw hasło dostępu do konta',
+	'New password was set up successfully' => 'Nowe hasło zostało pomyślnie utworzone',
+	'Go to login page' => 'Przejdź do strony logowania',
 );

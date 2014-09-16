@@ -1,6 +1,10 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
 return array(
+		'password' => array(
+			'not_empty' => 'Proszę wpisać hasło',
+			'min_length' => 'Nowe hasło musi składać się z co najmniej :param2 znaków',
+		),
 		'current_password' => array(
 			'not_empty' => 'Proszę wpisać aktualne hasło',
 			'check_password' => 'Proszę wpisać aktualne hasło',

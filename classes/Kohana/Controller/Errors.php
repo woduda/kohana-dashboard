@@ -7,6 +7,11 @@
  */
 class Kohana_Controller_Errors extends Controller_Dashboard_Template {
 
+	protected function require_login()
+	{
+		return FALSE;
+	}
+
 	public function action_index()
 	{
 		$this->set_content(View::factory('errors/default'));

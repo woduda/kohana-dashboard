@@ -2,6 +2,8 @@
 
 return array(
 		'name' => 'Kohana Dashboard',	// Project name
+		'email' => 'dashboard@dashboard.com',	// emails sender address
+		'password_min_length' => 8,
 		'top_menu' => array(
 			'users_changepassword' => array(
 				'name' => __('Change password'),

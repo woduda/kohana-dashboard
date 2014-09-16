@@ -34,7 +34,7 @@ class Kohana_Model_User extends Model_Auth_User {
 	public function active($active = NULL)
 	{
 		if ( ! $this->loaded())
-			throw new Kohana_Exception("Can't operatore on unloaded Model_User");
+			throw new Kohana_Exception("Can't operate on unloaded Model_User");
 
 		$has = $this->has_login_role();
 
@@ -65,7 +65,7 @@ class Kohana_Model_User extends Model_Auth_User {
 	public function has_login_role()
 	{
 		if ( ! $this->loaded())
-			throw new Kohana_Exception("Can't operatore on unloaded Model_User");
+			throw new Kohana_Exception("Can't operate on unloaded Model_User");
 
 		return (bool) DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 			->from("roles_users")
@@ -73,6 +73,48 @@ class Kohana_Model_User extends Model_Auth_User {
 			->where("role_id", '=', Kohana_Model_User::LOGIN_ROLE_ID)
 			->execute($this->_db)
 			->get('total_count');
+	}
+
+	/**
+	 * Creates new haslink for user
+	 * @param email - email from user will be used if this param not set
+	 * @throws Kohana_Exception
+	 * @return Model_User_Hashlink $hashlink new ORM object
+	 */
+	public function hashlink($email = NULL)
+	{
+		if ( ! $this->loaded())
+			throw new Kohana_Exception("Can't operate on unloaded Model_User");
+
+		// create new hash:
+		$hashlink = ORM::factory('User_Hashlink');
+		$hashlink->user = $this;
+		$hashlink->email = ($email === NULL ? $this->email : $email);
+
+		return $hashlink->save();
+	}
+
+	/**
+	 * Disable all not disabled hashlinks
+	 * @param string $except_emails
+	 * @return Kohana_Model_User
+	 */
+	public function disable_hashlinks($except_emails = NULL)
+	{
+		$query = DB::update('user_hashlinks')
+			->where('user_id', '=', $this->id)
+			->where('disabled', '=', 0)
+			->set(array(
+				'disabled' => time(),
+			));
+
+		if ($except_emails !== NULL)
+		{
+			$query->where('email', 'IN', (array) $except_emails);
+		}
+		$query->execute($this->_db);
+
+		return $this;
 	}
 
 } // End Kohana_Model_User
