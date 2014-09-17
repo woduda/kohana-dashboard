@@ -24,6 +24,49 @@ class Kohana_Model_User extends Model_Auth_User {
 		'roles'       => array('model' => 'Role', 'through' => 'roles_users'),
 	);
 
+	public function rules()
+	{
+		$rules = parent::rules();
+
+		$rules['password'] = array();	// empty rules for password
+		$rules['username'][] = array('alpha_numeric');
+
+		// new rules
+		$_rules = array(
+			'first_name' => array(
+				array('not_empty'),
+				array('max_length', array(":value", 254)),
+			),
+			'last_name' => array(
+				array('not_empty'),
+				array('max_length', array(":value", 254)),
+			),
+		);
+
+		return $rules + $_rules;
+	}
+
+	public function labels()
+	{
+		return array(
+			'username'         => 'Username',
+			'email'            => 'E-mail',
+			'password'         => 'Password',
+			'first_name'       => 'First name',
+			'last_name'        => 'Last name',
+		);
+	}
+
+	public function save(Validation $validation = NULL)
+	{
+		if ( ! $this->loaded())
+		{
+			$this->created = time();
+		}
+
+		return parent::save($validation);
+	}
+
 	/**
 	 * Sets or gets if user is active.
 	 * Active means: "can login" = has login role
@@ -64,13 +107,18 @@ class Kohana_Model_User extends Model_Auth_User {
 
 	public function has_login_role()
 	{
+		return $this->has_role(Kohana_Model_User::LOGIN_ROLE_ID);
+	}
+
+	public function has_role($role_id)
+	{
 		if ( ! $this->loaded())
 			throw new Kohana_Exception("Can't operate on unloaded Model_User");
 
 		return (bool) DB::select(array(DB::expr('COUNT(*)'), 'total_count'))
 			->from("roles_users")
 			->where("user_id", '=', $this->id)
-			->where("role_id", '=', Kohana_Model_User::LOGIN_ROLE_ID)
+			->where("role_id", '=', $role_id)
 			->execute($this->_db)
 			->get('total_count');
 	}
