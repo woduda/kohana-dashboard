@@ -188,13 +188,19 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		if ( ! $hashlink->loaded())
 			throw new HTTP_Exception_404();
 
+		if ( ! empty($hashlink->disabled))
+		{
+			$this->content = View::factory('users/hashlink/expired');
+			return;
+			// End
+		}
+
 		$done = FALSE;
 		$errors = array();
 		$user = $hashlink->user;
 
 		if ($this->request->method() == "POST")
 		{
-
 			$data = $this->request->post();
 
 			$valid = Validation::factory($data)
@@ -230,7 +236,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			}
 		}
 
-		$this->content = View::factory('users/hashlink')
+		$this->content = View::factory($done ? 'users/hashlink/changed' : 'users/hashlink')
 			->bind('user', $user)
 			->bind('errors', $errors)
 			->bind('done', $done);

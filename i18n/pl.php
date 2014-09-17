@@ -52,4 +52,5 @@ return array
 	'Set up your account password' => 'Ustaw hasło dostępu do konta',
 	'New password was set up successfully' => 'Nowe hasło zostało pomyślnie utworzone',
 	'Go to login page' => 'Przejdź do strony logowania',
+	'This link has expired' => 'Ten link stracił ważność',
 );
