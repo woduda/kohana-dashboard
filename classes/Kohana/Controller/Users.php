@@ -98,9 +98,10 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		if ($this->request->method() == Request::POST)
 		{
 			$data = $this->request->post();
+			$_data = $data;	// operate on copy: $_data
 			$email = $user->email; // keep email in the case od validation exception to restore this value in $user
 
-			$external_validation = Validation::factory($data)
+			$external_validation = Validation::factory($_data)
 				->labels(array(
 					'repeat_email' => 'Repeat e-mail',
 				))
@@ -113,28 +114,26 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 			if ($user->loaded())
 			{
-				if (empty($data['email']))
+				if (empty($_data['email']))
 				{
 					// no email while editing means: no changing but ORM model need email value to be not empty
-					$data['email'] = $user->email;
+					$_data['email'] = $user->email;
 				}
 			}
 			else
 			{
-				$data['password'] = Text::random('alnum', 14);	// set random password for new user
+				$_data['password'] = Text::random('alnum', 14);	// set random password for new user
 			}
 
 			try
 			{
-				$user->values($data)
+				$user->values($_data)
 					->save($external_validation);
 			}
 			catch (ORM_Validation_Exception $vex)
 			{
 				$errors = $vex->errors('orm');
-
-				$user->email = $email;
-				$data['email'] = NULL;
+				$user->email = $email;	// restore original email value
 			}
 
 			// Manage roles for user:
