@@ -145,12 +145,12 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 					// Adding:
 					if (in_array($role->id, $user_roles) AND ! $user->has_role($role->id))
 					{
-						$user->add('roles', ORM::factory('Role', $role->id));
+						$user->add('roles', $role);
 					}
 					// Removing:
 					if ( ! in_array($role->id, $user_roles) AND $user->has_role($role->id))
 					{
-						$user->remove('roles', ORM::factory('Role', $role->id));
+						$user->remove('roles', $role);
 					}
 				}
 				if ( ! empty($data['send_hashlink']))
