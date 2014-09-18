@@ -25,7 +25,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 	protected function require_login()
 	{
-		return ($this->request->action() != 'hash');
+		return ( ! in_array($this->request->action(), array('hash', 'recover')));
 	}
 
 	/**
@@ -68,6 +68,11 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		if ($this->add_edit($user))
 		{
 			$this->add_alert_success(__('New username :username was created.', array(':username' => $user->username)));
+			$send_hashlink = $this->request->post('send_hashlink');
+			if ( ! empty($send_hashlink))
+			{
+				$this->add_alert_success(__('Activation link was sent to :email.', array(":email" => $user->email)));
+			}
 			$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
 			// End
 		}
@@ -155,7 +160,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 				}
 				if ( ! empty($data['send_hashlink']))
 				{
-					$this->send_hashlink($user);
+					$this->send_activation($user);
 				}
 				// finish saving
 				return TRUE;
@@ -219,14 +224,50 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		$user = $this->check_user_id();
 		if ($user->id != $this->user->id AND $user->status == Model_User::STATUS_CREATED)
 		{
-			$this->send_hashlink($user, FALSE);
+			$this->send_activation($user, FALSE);
+
+			$this->add_alert_success(__('Activation link was sent to :email.', array(":email" => $user->email)));
 		}
 
 		$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
 		// End
 	}
 
-	protected function send_hashlink(Model_User & $user, $initial = TRUE)
+	/**
+	 * Password recovery
+	 */
+	public function action_recover()
+	{
+		$done = FALSE;
+		$error = FALSE;
+
+		if ($this->request->method() == "POST")
+		{
+			$username = $this->request->post('username');
+			$email = $this->request->post('email');
+
+			$user = ORM::factory('User')
+				->where('username', '=', $username)
+				->where('email', '=', $email)
+				->where('status', '!=', Model_User::STATUS_CREATED)
+				->find();
+
+			if ( ! $user->loaded() OR ! $user->has_login_role())
+			{
+				$error = __('No such user');
+			}
+			else
+			{
+				$this->send_recover($user);
+				$done = TRUE;
+			}
+		}
+
+		$this->content = View::factory($done ? 'users/recover/sent' : 'users/recover')
+			->bind('error', $error);
+	}
+
+	protected function send_activation(Model_User & $user, $initial = TRUE)
 	{
 		$name = $this->dashboard_config->get('name');
 
@@ -260,13 +301,41 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			->bind('user', $user)
 			->bind('hashlink', $hashlink);
 
-		Email::factory(__('Account activation at :name', array(":name" => $name)))
+		Email::factory("[$name] ".__('Account activation'))
 			->message($message)
 			->from($this->dashboard_config->get('email'), $name)
 			->to($user->email)
 			->send();
+	}
 
-		$this->add_alert_success(__('Activation link was sent to :email.', array(":email" => $user->email)));
+	protected function send_recover(Model_User & $user)
+	{
+		$name = $this->dashboard_config->get('name');
+
+		// Search for not disabled hashlink for
+		// this user and his current email
+		$hashlink = $user->hashlinks
+			->where('email', '=', $user->email)
+			->where('disabled', '=', 0)
+			->order_by('id', 'DESC')
+			->limit(1)
+			->find();
+
+		if ( ! $hashlink->loaded())
+		{
+			// Disable hashlinks for this user with other emails and create new one:
+			$hashlink = $user->disable_hashlinks()
+				->hashlink();
+		}
+		$message = View::factory('emails/users/recover')
+			->bind('user', $user)
+			->bind('hashlink', $hashlink);
+
+		Email::factory("[$name] ".__('Set new password for your account'))
+			->message($message)
+			->from($this->dashboard_config->get('email'), $name)
+			->to($user->email)
+			->send();
 	}
 
 	public function action_hash()
