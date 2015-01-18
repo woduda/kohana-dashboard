@@ -11,3 +11,11 @@ Route::set('logout', 'logout')
 		'controller' => 'Dashboard',
 		'action'     => 'logout',
 	));
+
+/* Route below must be placed just before 'default' route definition:
+Route::set('dashboard', '(<controller>(/<action>(/<id>)))')
+	->defaults(array(
+		'controller' => 'Dashboard',
+		'action'     => 'index',
+	));
+*/

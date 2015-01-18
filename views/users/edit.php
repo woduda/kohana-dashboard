@@ -1,5 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.'); ?>
-<a class="btn btn-primary pull-right" href="<?php echo Route::url('default', array('controller' => 'users')); ?>"><?php echo __('Back'); ?> &rarr;</a>
+<a class="btn btn-primary pull-right" href="<?php echo Route::url('dashboard', array('controller' => 'users')); ?>"><?php echo __('Back'); ?> &rarr;</a>
 <?php if ($user->loaded()): ?>
 <h1 class="page-header"><?php echo __('Edit user'); ?></h1>
 <?php else: ?>

@@ -32,7 +32,7 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 	{
 		if (Auth::instance()->logged_in())
 		{
-			$this->redirect(Route::get('default')->uri());
+			$this->redirect(Route::get('dashboard')->uri());
 			// End
 		}
 		$this->content = View::factory('login');
@@ -45,7 +45,7 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 
 			if ($success)
 			{
-				$this->redirect(Route::get('default')->uri());
+				$this->redirect(Route::get('dashboard')->uri());
 				// End
 			}
 			else

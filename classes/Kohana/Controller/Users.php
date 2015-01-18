@@ -11,16 +11,10 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 	{
 		parent::before();
 
-	}
-
-	public function after()
-	{
 		if ($this->auto_render)
 		{
 			$this->set_active_menu_item('users');
 		}
-
-		parent::after();
 	}
 
 	protected function require_login()
@@ -54,7 +48,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 		if ( ! $user->loaded())
 		{
-			$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+			$this->redirect(Route::get('dashboard')->uri(array("controller" => 'users')));
 			// End
 		}
 
@@ -73,7 +67,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			{
 				$this->add_alert_success(__('Activation link was sent to :email.', array(":email" => $user->email)));
 			}
-			$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+			$this->redirect(Route::get('dashboard')->uri(array("controller" => 'users')));
 			// End
 		}
 	}
@@ -85,7 +79,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		if ($this->add_edit($user))
 		{
 			$this->add_alert_success(__('Changes to user :username were saved.', array(':username' => $user->username)));
-			$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+			$this->redirect(Route::get('dashboard')->uri(array("controller" => 'users')));
 			// End
 		}
 	}
@@ -202,7 +196,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 			$this->add_alert_success(__('Access for username :username was unlocked.', array(":username" => $user->username)));
 		}
-		$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+		$this->redirect(Route::get('dashboard')->uri(array("controller" => 'users')));
 		// End
 	}
 
@@ -215,7 +209,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 			$this->add_alert_success(__('Access for username :username was locked.', array(":username" => $user->username)));
 		}
-		$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+		$this->redirect(Route::get('dashboard')->uri(array("controller" => 'users')));
 		// End
 	}
 
@@ -229,7 +223,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			$this->add_alert_success(__('Activation link was sent to :email.', array(":email" => $user->email)));
 		}
 
-		$this->redirect(Route::get('default')->uri(array("controller" => 'users')));
+		$this->redirect(Route::get('dashboard')->uri(array("controller" => 'users')));
 		// End
 	}
 

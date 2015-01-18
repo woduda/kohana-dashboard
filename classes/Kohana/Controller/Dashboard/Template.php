@@ -41,7 +41,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	 * Name of choosen menu item
 	 * @var string
 	 */
-	private $active_menu_item = NULL;
+	protected $active_menu_item = NULL;
 
 	/**
 	 * Logged user object
@@ -156,7 +156,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	 * @param array $items items array from config
 	 * @return array filtered items
 	 */
-	protected function menu(array $items)
+	protected function menu_items(array $items)
 	{
 		$_items = array();
 		foreach ($items as $id => $item)
@@ -169,6 +169,23 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 		}
 
 		return $_items;
+	}
+
+	protected function menu()
+	{
+		$_menu = $this->menu_items($this->dashboard_config->get('top_menu'));
+
+		$top_menu = View::factory('top_menu')
+			->set('data', $_menu)
+			->bind('active_menu_item', $this->active_menu_item);
+
+		$_menu = $this->menu_items($this->dashboard_config->get('side_menu'));
+		$side_menu = View::factory('side_menu')
+			->set('data', $_menu)
+			->bind('active_menu_item', $this->active_menu_item);
+
+		$this->template->bind('top_menu', $top_menu)
+			->bind('side_menu', $side_menu);
 	}
 
 	/**
@@ -190,22 +207,13 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 				{
 					$this->content->bind("logged_user", $this->user);
 				}
-				$_menu = $this->menu($this->dashboard_config->get('top_menu'));
 
-				$top_menu = View::factory('top_menu')
-					->set('data', $_menu)
-					->bind('active_menu_item', $this->active_menu_item);
-
-				$_menu = $this->menu($this->dashboard_config->get('side_menu'));
-				$side_menu = View::factory('side_menu')
-					->set('data', $_menu)
-					->bind('active_menu_item', $this->active_menu_item);
+				$this->menu();
 
 				$alerts = View::factory('alerts')
 					->bind('alerts', $this->alerts);
 
-				$this->template->bind('top_menu', $top_menu)
-					->bind('side_menu', $side_menu)
+				$this->template
 					->bind('alerts', $alerts);
 
 				Session::instance()->delete('alerts');

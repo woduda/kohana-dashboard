@@ -4,7 +4,7 @@ echo "Hello {$user->first_name},"; ?>
 
 Click the following link to reset your password:
 
-<?php echo Route::url('default', array('controller' => 'users', 'action' => 'hash', 'id' => $hashlink->hash), TRUE); ?>
+<?php echo Route::url('dashboard', array('controller' => 'users', 'action' => 'hash', 'id' => $hashlink->hash), TRUE); ?>
 
 
 

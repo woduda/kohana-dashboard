@@ -11,4 +11,4 @@ Your username: <?php echo $user->username; ?>
 
 Click the link below to set your own password and activate your account:
 
-<?php echo Route::url('default', array('controller' => 'users', 'action' => 'hash', 'id' => $hashlink->hash), TRUE); ?>
+<?php echo Route::url('dashboard', array('controller' => 'users', 'action' => 'hash', 'id' => $hashlink->hash), TRUE); ?>

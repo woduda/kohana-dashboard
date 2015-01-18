@@ -15,7 +15,7 @@
 		</div>
 		<div class="form-group">
 			<?php echo Form::label('password', __('Password')); ?>
-			<div class="pull-right"><?php echo HTML::anchor(Route::get('default')->uri(array('controller' => 'users', 'action' => 'recover')), __('Forgot password'), array('tabindex' => '4')); ?></div>
+			<div class="pull-right"><?php echo HTML::anchor(Route::get('dashboard')->uri(array('controller' => 'users', 'action' => 'recover')), __('Forgot password'), array('tabindex' => '4')); ?></div>
 			<?php echo Form::password('password', '', array('id' => 'password', 'class' => 'form-control input-lg', 'tabindex' => '2')); ?>
 		</div>
 		<?php echo Form::submit('sign_in', __('Sign in'), array("class" => "btn btn-primary btn-lg btn-block", 'tabindex' => '3')); ?>
