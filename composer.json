@@ -1,5 +1,5 @@
 {
-    "name": "woduda/kohana-dashboard"
+    "name": "woduda/kohana-dashboard",
     "description": "Kohana 3.3 module for creation of simple dashboards/panels",
     "keywords": ["kohana", "dashboard", "module", "library"],
     "homepage": "http://github.com/woduda/kohana-dashboard",
