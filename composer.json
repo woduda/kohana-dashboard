@@ -1,3 +1,17 @@
 {
     "name": "woduda/kohana-dashboard"
+    "description": "Kohana 3.3 module for creation of simple dashboards/panels",
+    "keywords": ["kohana", "dashboard", "module", "library"],
+    "homepage": "http://github.com/woduda/kohana-dashboard",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Wojciech Duda",
+            "email": "wo.duda@gmail.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3",
+        "shadowhand/email": "2.0.*"
+    }
 }
