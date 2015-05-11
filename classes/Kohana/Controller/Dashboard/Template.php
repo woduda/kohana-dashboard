@@ -122,7 +122,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	 * @param string|array $role - one role string or array of roles
 	 * @return boolean TRUE if user has all roles
 	 */
-	protected function has_role($role)
+	protected function has_role($role, $any = FALSE)
 	{
 		if (empty($role))
 			return TRUE;
@@ -131,10 +131,16 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 		{
 			foreach ($role as $r)
 			{
-				if ( ! array_key_exists($r, $this->user_roles))
+				$has = array_key_exists($r, $this->user_roles);
+				if ($any)
+				{
+					if ($has)
+						return TRUE;
+				}
+				elseif ( ! $has)
 					return FALSE;
 			}
-			return TRUE;
+			return FALSE;
 		}
 		else
 			return array_key_exists($role, $this->user_roles);
@@ -162,7 +168,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 		foreach ($items as $id => $item)
 		{
 			$role = Arr::get($item, 'role');
-			if ( ! $this->has_role($role))
+			if ( ! $this->has_role($role, TRUE))
 				continue;
 
 			$_items[$id] = $item;

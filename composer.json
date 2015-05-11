@@ -1,5 +1,6 @@
 {
     "name": "woduda/kohana-dashboard",
+    "type": "kohana-module",
     "description": "Kohana 3.3 module for creation of simple dashboards/panels",
     "keywords": ["kohana", "dashboard", "module", "library"],
     "homepage": "http://github.com/woduda/kohana-dashboard",
@@ -11,7 +12,9 @@
         }
     ],
     "require": {
-        "php": ">=5.3",
+        "composer/installers": "~1.0",
+        "kohana/core": ">=3.3",
+        "php": ">=5.3.3",
         "shadowhand/email": "2.0.*"
     }
 }
