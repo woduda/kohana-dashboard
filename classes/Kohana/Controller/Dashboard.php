@@ -22,7 +22,7 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 	 */
 	public function action_index()
 	{
-		$this->set_content(View::factory('index'));
+		$this->set_content(View::factory('dashboard/index'));
 	}
 
 	/**
@@ -35,7 +35,7 @@ class Kohana_Controller_Dashboard extends Controller_Dashboard_Template {
 			$this->redirect(Route::get('dashboard')->uri());
 			// End
 		}
-		$this->content = View::factory('login');
+		$this->content = View::factory('dashboard/login');
 		if ($this->request->method() == "POST")
 		{
 			$login = $this->request->post('username');

@@ -5,7 +5,7 @@
  * @author wduda
  *
  */
-class Kohana_Controller_Errors extends Controller_Dashboard_Template {
+class Kohana_Controller_Dashboard_Errors extends Controller_Dashboard_Template {
 
 	protected function require_login()
 	{
@@ -14,12 +14,12 @@ class Kohana_Controller_Errors extends Controller_Dashboard_Template {
 
 	public function action_index()
 	{
-		$this->set_content(View::factory('errors/default'));
+		$this->set_content(View::factory('dashboard/errors/default'));
 	}
 
 	public function action_404()
 	{
-		$this->set_content(View::factory('errors/404'));
+		$this->set_content(View::factory('dashboard/errors/404'));
 	}
 
-} // End Kohana_Controller_Errors
+} // End Kohana_Controller_Dashboard_Errors

@@ -20,7 +20,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	/**
 	 * @var string Page template filename
 	 */
-	public $_template = 'templates/default';
+	public $_template = 'templates/dashboard';
 
 	/**
 	 * @var class of <body> tag
@@ -181,12 +181,12 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 	{
 		$_menu = $this->menu_items($this->dashboard_config->get('top_menu'));
 
-		$top_menu = View::factory('top_menu')
+		$top_menu = View::factory('dashboard/top_menu')
 			->set('data', $_menu)
 			->bind('active_menu_item', $this->active_menu_item);
 
 		$_menu = $this->menu_items($this->dashboard_config->get('side_menu'));
-		$side_menu = View::factory('side_menu')
+		$side_menu = View::factory('dashboard/side_menu')
 			->set('data', $_menu)
 			->bind('active_menu_item', $this->active_menu_item);
 
@@ -216,7 +216,7 @@ class Kohana_Controller_Dashboard_Template extends Controller_Dashboard_Base {
 
 				$this->menu();
 
-				$alerts = View::factory('alerts')
+				$alerts = View::factory('dashboard/alerts')
 					->bind('alerts', $this->alerts);
 
 				$this->template

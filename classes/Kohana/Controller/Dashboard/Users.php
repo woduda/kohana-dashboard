@@ -6,7 +6,7 @@ use Shadowhand\Email;
  * @author wduda
  *
  */
-class Kohana_Controller_Users extends Controller_Dashboard_Template {
+class Kohana_Controller_Dashboard_Users extends Controller_Dashboard_Template {
 
 	public function before()
 	{
@@ -36,7 +36,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			Model_User::STATUS_CREATED => array(FALSE => __('Created not confirmed')),
 			Model_User::STATUS_CONFIRMED => array(FALSE => __('Locked'), TRUE => __('Confirmed and active')),
 		);
-		$this->content = View::factory("users")
+		$this->content = View::factory("dashboard/users")
 			->bind("users", $users)
 			->bind("statuses", $statuses);
 	}
@@ -181,7 +181,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			);
 		}
 
-		$this->content = View::factory("users/edit")
+		$this->content = View::factory("dashboard/users/edit")
 			->bind("user", $user)
 			->bind("roles", $roles)
 			->bind("data", $data)
@@ -258,7 +258,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			}
 		}
 
-		$this->content = View::factory($done ? 'users/recover/sent' : 'users/recover')
+		$this->content = View::factory($done ? 'dashboard/users/recover/sent' : 'dashboard/users/recover')
 			->bind('error', $error);
 	}
 
@@ -292,7 +292,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 					->hashlink();
 			}
 		}
-		$message = View::factory('emails/users/activation')
+		$message = View::factory('dashboard/emails/users/activation')
 			->bind('user', $user)
 			->bind('hashlink', $hashlink);
 
@@ -322,7 +322,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			$hashlink = $user->disable_hashlinks()
 				->hashlink();
 		}
-		$message = View::factory('emails/users/recover')
+		$message = View::factory('dashboard/emails/users/recover')
 			->bind('user', $user)
 			->bind('hashlink', $hashlink);
 
@@ -347,7 +347,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 
 		if ( ! empty($hashlink->disabled))
 		{
-			$this->content = View::factory('users/hashlink/expired');
+			$this->content = View::factory('dashboard/users/hashlink/expired');
 			return;
 			// End
 		}
@@ -396,7 +396,7 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 			}
 		}
 
-		$this->content = View::factory($done ? 'users/hashlink/changed' : 'users/hashlink')
+		$this->content = View::factory($done ? 'dashboard/users/hashlink/changed' : 'dashboard/users/hashlink')
 			->bind('user', $user)
 			->bind('errors', $errors)
 			->bind('done', $done);
@@ -449,10 +449,10 @@ class Kohana_Controller_Users extends Controller_Dashboard_Template {
 		}
 
 		$this->set_content(
-			View::factory('users/changepassword')
+			View::factory('dashboard/users/changepassword')
 				->bind('data', $data)
 				->bind('errors', $errors)
 			);
 	}
 
-} // End Kohana_Controller_Users
+} // End Kohana_Controller_Dashboard_Users
