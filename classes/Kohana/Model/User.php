@@ -137,6 +137,7 @@ class Kohana_Model_User extends Model_Auth_User {
 		// create new hash:
 		$hashlink = ORM::factory('User_Hashlink');
 		$hashlink->user = $this;
+		$hashlink->disabled = 0;
 		$hashlink->email = ($email === NULL ? $this->email : $email);
 
 		return $hashlink->save();
