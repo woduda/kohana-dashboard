@@ -2,7 +2,7 @@
     "name": "woduda/kohana-dashboard",
     "type": "kohana-module",
     "description": "Kohana 3.3 module for creation of simple dashboards/panels",
-    "keywords": ["kohana", "dashboard", "module", "library"],
+    "keywords": ["kohana", "koseven", "dashboard", "module", "library"],
     "homepage": "http://github.com/woduda/kohana-dashboard",
     "license": "MIT",
     "authors": [
@@ -13,8 +13,8 @@
     ],
     "require": {
         "composer/installers": "~1.0",
-        "kohana/core": ">=3.3",
-        "php": ">=5.3.3",
-        "shadowhand/email": "2.0.*"
+        "illusorium/kohana-email": "^2.0",
+        "koseven/koseven": "^3.3",
+        "php": ">=5.3.3"
     }
 }
