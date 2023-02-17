@@ -5,6 +5,12 @@
     "keywords": ["kohana", "koseven", "dashboard", "module", "library"],
     "homepage": "http://github.com/woduda/kohana-dashboard",
     "license": "MIT",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/woduda/email"
+        }
+    ],
     "authors": [
         {
             "name": "Wojciech Duda",
@@ -13,7 +19,7 @@
     ],
     "require": {
         "composer/installers": "~1.0",
-        "illusorium/kohana-email": "^2.0",
+        "woduda/email": "^2.0",
         "koseven/koseven": "^3.3",
         "php": ">=5.3.3"
     }
