@@ -19,7 +19,7 @@
     ],
     "require": {
         "composer/installers": "~1.0",
-        "woduda/email": "^2.0",
+        "woduda/email": "dev-master",
         "koseven/koseven": "^3.3",
         "php": ">=5.3.3"
     }
