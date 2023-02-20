@@ -1,6 +1,5 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-use Shadowhand\Email;
 /**
  * Controller class for all user management tasks
  * @author wduda
